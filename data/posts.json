@@ -8,6 +8,14 @@
     "file": "hello-world.html"
   },
   {
+    "slug": "the-gadfly-letter",
+    "title": "牛虻给琼玛的信",
+    "date": "2026-05-21",
+    "tag": "台词",
+    "excerpt": "选自小说《牛虻》——亚瑟在就义前写给琼玛的信。不论我活着，或者我死掉，我都是一只快乐的飞虻！",
+    "file": "the-gadfly-letter.html"
+  },
+  {
     "slug": "making-3d-art",
     "title": "用 Three.js 做 3D 艺术的笔记",
     "date": "2026-05-20",
