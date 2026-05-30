@@ -2,6 +2,20 @@
 (function() {
   'use strict';
 
+  // === Derive blog root (relative to current page) from script src ===
+  // Works regardless of deployment depth (/blog/, /, /subpath/)
+  var BLOG = '.';
+  (function() {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var src = scripts[i].getAttribute('src');
+      if (src && src.indexOf('main.js') !== -1) {
+        BLOG = src.replace(/\/js\/main\.js$/, '');
+        break;
+      }
+    }
+  })();
+
   // === Theme ===
   const storedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -70,7 +84,7 @@
     const container = document.getElementById('posts-list');
     if (!container) return;
 
-    fetch('/blog/data/posts.json')
+    fetch(BLOG + '/data/posts.json')
       .then(function(r) { return r.json(); })
       .then(function(posts) {
         container.innerHTML = '';
@@ -81,7 +95,7 @@
           var dateStr = d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0');
 
           var el = document.createElement('a');
-          el.href = '/blog/posts/' + post.file;
+          el.href = BLOG + '/posts/' + post.file;
           el.className = 'archive-item';
           el.innerHTML =
             '<span class="archive-date">' + dateStr + '</span>' +
@@ -100,7 +114,7 @@
     const container = document.getElementById('home-posts');
     if (!container) return;
 
-    fetch('/blog/data/posts.json')
+    fetch(BLOG + '/data/posts.json')
       .then(function(r) { return r.json(); })
       .then(function(posts) {
         container.innerHTML = '';
@@ -115,7 +129,7 @@
               '<time>' + dateStr + '</time>' +
               '<span class="post-tag">' + post.tag + '</span>' +
             '</div>' +
-            '<h3><a href="/blog/posts/' + post.file + '">' + post.title + '</a></h3>' +
+            '<h3><a href="' + BLOG + '/posts/' + post.file + '">' + post.title + '</a></h3>' +
             '<p class="post-excerpt">' + post.excerpt + '</p>';
           container.appendChild(el);
         });
@@ -130,7 +144,7 @@
     const container = document.getElementById('projects-grid');
     if (!container) return;
 
-    fetch('/blog/data/projects.json')
+    fetch(BLOG + '/data/projects.json')
       .then(function(r) { return r.json(); })
       .then(function(projects) {
         container.innerHTML = '';
@@ -167,7 +181,7 @@
     const container = document.getElementById('home-projects');
     if (!container) return;
 
-    fetch('/blog/data/projects.json')
+    fetch(BLOG + '/data/projects.json')
       .then(function(r) { return r.json(); })
       .then(function(projects) {
         container.innerHTML = '';
